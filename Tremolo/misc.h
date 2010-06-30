@@ -67,6 +67,7 @@ extern void _VDBG_free(void *ptr,char *file,long line);
 /* 64 bit multiply */
 
 #include <sys/types.h>
+#include <endian.h>
 
 #if BYTE_ORDER==LITTLE_ENDIAN
 union magic {
