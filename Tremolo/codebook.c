@@ -620,8 +620,13 @@ int vorbis_book_unpack(oggpack_buffer *opb,codebook *s){
 ogg_uint32_t decode_packed_entry_number(codebook *book,
                                         oggpack_buffer *b);
 #else
+#ifndef MIPS_ASM
 static inline ogg_uint32_t decode_packed_entry_number(codebook *book,
 						      oggpack_buffer *b){
+#else
+ogg_uint32_t decode_packed_entry_number(codebook *book,
+                                        oggpack_buffer *b){
+#endif // MIPS_ASM
   ogg_uint32_t chase=0;
   int  read=book->dec_maxlength;
   long lok = oggpack_look(b,read),i;
@@ -726,6 +731,7 @@ long vorbis_book_decode(codebook *book, oggpack_buffer *b){
  return decode_packed_entry_number(book,b);
 }
 
+#ifndef MIPS_ASM
 #ifndef ONLY_C
 int decode_map(codebook *s, oggpack_buffer *b, ogg_int32_t *v, int point);
 #else
@@ -804,6 +810,7 @@ static int decode_map(codebook *s, oggpack_buffer *b, ogg_int32_t *v, int point)
   return 0;
 }
 #endif
+#endif // MIPS_ASM
 
 /* returns 0 on OK or -1 on eof *************************************/
 long vorbis_book_decodevs_add(codebook *book,ogg_int32_t *a,
@@ -863,6 +870,7 @@ long vorbis_book_decodev_set(codebook *book,ogg_int32_t *a,
   return 0;
 }
 
+#ifndef MIPS_ASM
 #ifndef ONLY_C
 long vorbis_book_decodevv_add(codebook *book,ogg_int32_t **a,
 			      long offset,int ch,
@@ -893,3 +901,4 @@ long vorbis_book_decodevv_add(codebook *book,ogg_int32_t **a,
   return 0;
 }
 #endif
+#endif //MIPS_ASM

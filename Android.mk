@@ -16,6 +16,18 @@ LOCAL_SRC_FILES = \
 	Tremolo/treminfo.c \
 	Tremolo/vorbisfile.c
 
+ifeq ($(TARGET_ARCH),mips)
+LOCAL_SRC_FILES += Tremolo/mips-dspr1/decode_map.S
+LOCAL_CFLAGS += -DMIPS_ASM
+
+ifeq ($(ARCH_MIPS_HAS_DSP),true)
+LOCAL_SRC_FILES += \
+    Tremolo/mips-dspr1/floor1_inverse2_asm.S \
+    Tremolo/mips-dspr1/mdct_backward_asm.S
+LOCAL_CFLAGS += -DMIPS_DSP
+endif #dsp
+
+endif #mips
 ifeq ($(TARGET_ARCH),arm)
 LOCAL_SRC_FILES += \
 	Tremolo/bitwiseARM.s \
@@ -27,7 +39,7 @@ LOCAL_CFLAGS += \
 else
 LOCAL_CFLAGS += \
     -DONLY_C
-endif
+endif #arm
 LOCAL_CFLAGS+= -O2
 
 LOCAL_C_INCLUDES:= \
