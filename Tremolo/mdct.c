@@ -60,6 +60,7 @@
 
 #include <stdio.h>
 
+#ifndef MIPS_DSP
 #if defined(ONLY_C)
 STIN void presymmetry(DATA_TYPE *in,int n2,int step){
   DATA_TYPE *aX;
@@ -430,6 +431,7 @@ void mdct_backward(int n, DATA_TYPE *in){
     mdct_step8(in,n,step);
 #endif
 }
+#endif //MIPS_DSP
 
 #if defined(ONLY_C)
 void mdct_shift_right(int n, DATA_TYPE *in, DATA_TYPE *right){
@@ -442,6 +444,7 @@ void mdct_shift_right(int n, DATA_TYPE *in, DATA_TYPE *right){
 }
 #endif
 
+#ifndef MIPS_DSP
 extern ogg_int16_t *mdct_unroll_prelap(ogg_int16_t *out,
                                        DATA_TYPE   *post,
                                        DATA_TYPE   *l,
@@ -579,4 +582,4 @@ void mdct_unroll_lap(int n0,int n1,
 #endif
   }
 }
-
+#endif //MIPS_DSP
