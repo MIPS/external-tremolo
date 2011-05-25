@@ -117,20 +117,20 @@ void vorbis_dsp_destroy(vorbis_dsp_state *v){
 
 static LOOKUP_T *_vorbis_window(int left){
   switch(left){
+  case 128:
+    return vwin256;
+  case 1024:
+    return vwin2048;
+  case 256:
+    return vwin512;
+  case 2048:
+    return vwin4096;
   case 32:
     return vwin64;
   case 64:
     return vwin128;
-  case 128:
-    return vwin256;
-  case 256:
-    return vwin512;
   case 512:
     return vwin1024;
-  case 1024:
-    return vwin2048;
-  case 2048:
-    return vwin4096;
 #ifndef LIMIT_TO_64kHz
   case 4096:
     return vwin8192;
