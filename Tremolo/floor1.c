@@ -218,6 +218,7 @@ int render_point(int x0,int x1,int y0,int y1,int x){
   }
 }
 
+#ifndef MIPS_DSP
 #ifndef ONLY_C
 void render_lineARM(int n, ogg_int32_t *d,const ogg_int32_t *floor, int base, int err, int adx, int ady);
 #endif
@@ -277,6 +278,8 @@ static void render_line(int n,int x0,int x1,int y0,int y1,ogg_int32_t *d){
   render_lineARM(n,d,floor,base,err,adx,ady);
 #endif
 }
+#endif //MIPS_DSP
+
 
 int floor1_memosize(vorbis_info_floor *i){
   vorbis_info_floor1 *info=(vorbis_info_floor1 *)i;
@@ -371,6 +374,7 @@ ogg_int32_t *floor1_inverse1(vorbis_dsp_state *vd,vorbis_info_floor *in,
   return(NULL);
 }
 
+#ifndef MIPS_DSP
 int floor1_inverse2(vorbis_dsp_state *vd,vorbis_info_floor *in,
 		    ogg_int32_t *fit_value,ogg_int32_t *out){
   vorbis_info_floor1 *info=(vorbis_info_floor1 *)in;
@@ -404,3 +408,4 @@ int floor1_inverse2(vorbis_dsp_state *vd,vorbis_info_floor *in,
   memset(out,0,sizeof(*out)*n);
   return(0);
 }
+#endif //MIPS_DSP
